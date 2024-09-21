@@ -1,7 +1,7 @@
 import './styles/globals.css'
 import type { Metadata } from 'next'
 import Header from './components/Header'
-
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 export const metadata: Metadata = {
   title: 'InstaClone',
   description: 'Instagram clone created with Next.js',
