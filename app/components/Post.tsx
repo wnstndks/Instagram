@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Image from 'next/image'
-import { useState } from 'react'
+import Image from "next/image";
+import { useState } from "react";
 
 interface PostProps {
   user: string;
@@ -11,7 +11,13 @@ interface PostProps {
   caption: string;
 }
 
-export default function Post({ user, userImage, imageUrl, likes: initialLikes, caption }: PostProps) {
+export default function Post({
+  user,
+  userImage,
+  imageUrl,
+  likes: initialLikes,
+  caption,
+}: PostProps) {
   const [likes, setLikes] = useState(initialLikes);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -25,23 +31,34 @@ export default function Post({ user, userImage, imageUrl, likes: initialLikes, c
   };
 
   return (
-    <div className="bg-white border rounded-lg mb-8">
+    <div className="bg-white border rounded-lg mb-8 flex flex-col items-center">
       <div className="flex items-center p-4">
-        <Image src={userImage} alt={user} width={32} height={32} className="rounded-full mr-3" />
+        <Image
+          src={userImage}
+          alt={user}
+          width={32}
+          height={32}
+          className="rounded-full mr-3"
+        />
         <span className="font-semibold">{user}</span>
       </div>
-      <Image src={imageUrl} alt={caption} width={600} height={600} className="w-full" />
-      <div className="p-4">
+      <Image
+        src="/public/images/cat.jpg"
+        alt={caption}
+        width={600}
+        height={600}
+        className="w-full"
+      />
+      <div className="p-4 text-center">
         <div className="flex items-center mb-2">
-          <button onClick={handleLike}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill={isLiked ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 mr-2">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
+          <button onClick={handleLike} style={{'margin':'10px','fontSize':'20px'}}>❤️</button>
           <span className="font-semibold">{likes} likes</span>
         </div>
-        <p><span className="font-semibold mr-2">{user}</span>{caption}</p>
+        <p>
+          <span className="font-semibold mr-2">{user}</span>
+          {caption}
+        </p>
       </div>
     </div>
-  )
+  );
 }
