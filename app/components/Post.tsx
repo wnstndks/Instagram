@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import Image from "next/image";
 import { useState } from "react";
@@ -43,7 +43,7 @@ export default function Post({
         <span className="font-semibold">{user}</span>
       </div>
       <Image
-        src="/public/images/cat.jpg"
+        src={imageUrl}
         alt={caption}
         width={600}
         height={600}
