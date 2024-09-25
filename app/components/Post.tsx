@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -31,31 +31,62 @@ export default function Post({
   };
 
   return (
-    <div className="bg-white border rounded-lg mb-8 flex flex-col items-center">
-      <div className="flex items-center p-4">
+    <div style={{
+      backgroundColor: 'white',
+      border: '1px solid #e5e5e5',
+      borderRadius: '8px',
+      marginBottom: '60px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      margin: '0 auto',
+      maxWidth: '50%', // 가로 크기 60%
+      padding: '0 16px', // 양쪽 패딩 추가
+      boxSizing: 'border-box', // 패딩을 포함한 전체 크기 계산
+      marginTop:'30px',
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        padding: '16px'
+      }}>
         <Image
           src={userImage}
           alt={user}
           width={32}
           height={32}
-          className="rounded-full mr-3"
+          style={{
+            borderRadius: '50%',
+            marginRight: '16px'
+          }}
         />
-        <span className="font-semibold">{user}</span>
+        <span style={{ fontWeight: '600' }}>{user}</span>
       </div>
       <Image
         src={imageUrl}
         alt={caption}
         width={600}
         height={600}
-        className="w-full"
+        style={{ width: '70%' }}
       />
-      <div className="p-4 text-center">
-        <div className="flex items-center mb-2">
-          <button onClick={handleLike} style={{'margin':'10px','fontSize':'20px'}}>❤️</button>
-          <span className="font-semibold">{likes} likes</span>
+      <div style={{
+        padding: '16px',
+        textAlign: 'center'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: '8px',
+          justifyContent: 'center'
+        }}>
+          <button onClick={handleLike} style={{ margin: '10px', fontSize: '20px' }}>❤️</button>
+          <span style={{ fontWeight: '600' }}>{likes} likes</span>
         </div>
         <p>
-          <span className="font-semibold mr-2">{user}</span>
+          <span style={{
+            fontWeight: '600',
+            marginRight: '8px'
+          }}>{user}</span>
           {caption}
         </p>
       </div>

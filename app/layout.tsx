@@ -16,11 +16,31 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100">
-        <Header />
-        <main>{children}</main>
-        <Footer/>
+      <body style={bodyStyle}>
+        <div style={contentWrapperStyle}>
+          <Header />
+          <main style={mainStyle}>{children}</main>
+        </div>
+        <Footer />
       </body>
     </html>
   )
 }
+
+const bodyStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  minHeight: '100vh',
+  backgroundColor: '#f3f4f6', // Equivalent to Tailwind's bg-gray-100
+};
+
+const contentWrapperStyle: React.CSSProperties = {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+};
+
+const mainStyle: React.CSSProperties = {
+  flex: 1,
+  padding: '10px',
+};
