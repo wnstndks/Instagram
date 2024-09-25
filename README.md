@@ -1,6 +1,8 @@
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Clone Instagram Logo" width="150"/>
+
 # Clone Instagram
 
-![Clone Instagram Logo](https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png)
+<br/>
 
 ## 📜 프로젝트 설명
 
