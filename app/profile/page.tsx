@@ -1,14 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-
+import cat from '../public/img/image.png';
 export default function Profile() {
   return (
     <div className="max-w-4xl mx-auto mt-8 p-4">
       {/* 프로필 헤더 */}
       <div className="flex items-center mb-8">
         <Image
-          src="/user-placeholder.jpg" // 프로필 이미지 경로
+          src={cat} // 프로필 이미지 경로
           alt="User Profile"
           width={100}
           height={100}
