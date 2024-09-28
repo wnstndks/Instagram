@@ -2,15 +2,38 @@
 
 import { useState } from 'react';
 
-export default function CreatePost() {
+export default function Write() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState<File | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 게시물 제출 처리 로직 추가
-    console.log({ title, description, image });
+
+    // FormData 객체 생성 (파일과 다른 데이터 전송)
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    if (image) {
+      formData.append('image', image);
+    }
+
+    try {
+      const res = await fetch('/api/write', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log('게시물 작성 완료:', data);
+        // 성공적으로 제출된 경우, 다른 페이지로 이동하거나 알림 표시
+      } else {
+        console.error('게시물 작성 실패');
+      }
+    } catch (error) {
+      console.error('오류 발생:', error);
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,37 +44,43 @@ export default function CreatePost() {
 
   return (
     <div style={containerStyle}>
-      <h1 style={headerStyle}>게시물 작성</h1>
+      <h1>글 작성</h1>
       <form onSubmit={handleSubmit} style={formStyle}>
         <div style={formGroupStyle}>
-          <label style={labelStyle}>제목</label>
+          <label htmlFor="title" style={labelStyle}>제목</label>
           <input
             type="text"
+            id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            required
             style={inputStyle}
-            placeholder="제목을 입력하세요"
           />
         </div>
 
         <div style={formGroupStyle}>
-          <label style={labelStyle}>설명</label>
+          <label htmlFor="description" style={labelStyle}>내용</label>
           <textarea
+            id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
             style={textareaStyle}
-            placeholder="게시물 설명을 입력하세요"
           />
         </div>
 
         <div style={formGroupStyle}>
-          <label style={labelStyle}>이미지 업로드</label>
-          <input type="file" onChange={handleImageChange} style={inputStyle} />
+          <label htmlFor="image" style={labelStyle}>이미지 업로드</label>
+          <input
+            type="file"
+            id="image"
+            onChange={handleImageChange}
+            accept="image/*"
+            style={inputStyle}
+          />
         </div>
 
-        <button type="submit" style={submitButtonStyle}>
-          게시물 작성
-        </button>
+        <button type="submit" style={submitButtonStyle}>게시물 작성</button>
       </form>
     </div>
   );
@@ -59,18 +88,9 @@ export default function CreatePost() {
 
 // 스타일 정의
 const containerStyle: React.CSSProperties = {
-  maxWidth: '600px',
+  maxWidth: '800px',
   margin: '2rem auto',
   padding: '1rem',
-  border: '1px solid #e2e8f0',
-  borderRadius: '0.5rem',
-};
-
-const headerStyle: React.CSSProperties = {
-  fontSize: '1.5rem',
-  fontWeight: 'bold',
-  textAlign: 'center',
-  marginBottom: '1.5rem',
 };
 
 const formStyle: React.CSSProperties = {
@@ -82,31 +102,33 @@ const formStyle: React.CSSProperties = {
 const formGroupStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
+  gap: '0.5rem',
 };
 
 const labelStyle: React.CSSProperties = {
-  marginBottom: '0.5rem',
   fontWeight: 'bold',
 };
 
 const inputStyle: React.CSSProperties = {
   padding: '0.5rem',
-  border: '1px solid #cbd5e0',
+  fontSize: '1rem',
   borderRadius: '0.25rem',
+  border: '1px solid #cbd5e0',
 };
 
 const textareaStyle: React.CSSProperties = {
-  height: '100px',
   padding: '0.5rem',
-  border: '1px solid #cbd5e0',
+  fontSize: '1rem',
   borderRadius: '0.25rem',
+  border: '1px solid #cbd5e0',
+  minHeight: '8rem',
 };
 
 const submitButtonStyle: React.CSSProperties = {
-  padding: '0.75rem',
   backgroundColor: '#4299e1',
   color: 'white',
-  border: 'none',
+  padding: '0.5rem 1rem',
   borderRadius: '0.25rem',
+  border: 'none',
   cursor: 'pointer',
 };

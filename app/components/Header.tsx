@@ -11,9 +11,6 @@ export default function Header() {
       <Logo><StyledLink href="/">Instagram</StyledLink></Logo>
       <SearchBar placeholder="Search" />
       <Icons>
-        <StyledLink href="/">
-          <Icon>🏠</Icon>
-        </StyledLink>
         <StyledLink href="/messages">
           <Icon>💬</Icon>
         </StyledLink>
