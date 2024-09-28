@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <HeaderContainer>
-      <Logo>Instagram</Logo>
+      <Logo><StyledLink href="/">Instagram</StyledLink></Logo>
       <SearchBar placeholder="Search" />
       <Icons>
         <StyledLink href="/">
