@@ -1,16 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import styled from 'styled-components';
 
-export default function Write() {
+export default function WritePage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null); // 이미지 미리보기
+  const [postSubmitted, setPostSubmitted] = useState(false); // 게시물 제출 여부
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // FormData 객체 생성 (파일과 다른 데이터 전송)
+    // FormData로 서버에 보내는 부분 생략 가능
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -18,117 +21,114 @@ export default function Write() {
       formData.append('image', image);
     }
 
-    try {
-      const res = await fetch('/api/write', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        console.log('게시물 작성 완료:', data);
-        // 성공적으로 제출된 경우, 다른 페이지로 이동하거나 알림 표시
-      } else {
-        console.error('게시물 작성 실패');
-      }
-    } catch (error) {
-      console.error('오류 발생:', error);
-    }
+    // 실제 서버 전송 로직 생략
+    setPostSubmitted(true); // 게시물 제출 상태 true로 변경
   };
 
+  // 이미지 선택 시 미리보기 설정
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImage(e.target.files[0]);
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file)); // 이미지 미리보기 URL 생성
     }
   };
 
   return (
-    <div style={containerStyle}>
+    <Container>
       <h1>글 작성</h1>
-      <form onSubmit={handleSubmit} style={formStyle}>
-        <div style={formGroupStyle}>
-          <label htmlFor="title" style={labelStyle}>제목</label>
+      <form onSubmit={handleSubmit}>
+        <FormGroup>
+          <label htmlFor="title">제목</label>
           <input
             type="text"
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            style={inputStyle}
           />
-        </div>
+        </FormGroup>
 
-        <div style={formGroupStyle}>
-          <label htmlFor="description" style={labelStyle}>내용</label>
+        <FormGroup>
+          <label htmlFor="description">내용</label>
           <textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            style={textareaStyle}
           />
-        </div>
+        </FormGroup>
 
-        <div style={formGroupStyle}>
-          <label htmlFor="image" style={labelStyle}>이미지 업로드</label>
+        <FormGroup>
+          <label htmlFor="image">이미지 업로드</label>
           <input
             type="file"
             id="image"
             onChange={handleImageChange}
             accept="image/*"
-            style={inputStyle}
           />
-        </div>
+        </FormGroup>
 
-        <button type="submit" style={submitButtonStyle}>게시물 작성</button>
+        {/* 이미지 미리보기 */}
+        {imagePreview && (
+          <ImagePreview>
+            <p>이미지 미리보기:</p>
+            <img src={imagePreview} alt="미리보기 이미지" />
+          </ImagePreview>
+        )}
+
+        <button type="submit">게시물 작성</button>
       </form>
-    </div>
+
+      {/* 게시물 미리보기 */}
+      {postSubmitted && (
+        <PostPreview>
+          <h2>제출된 게시물</h2>
+          <h3>{title}</h3>
+          <p>{description}</p>
+          {imagePreview && <img src={imagePreview} alt="게시물 이미지" />}
+        </PostPreview>
+      )}
+    </Container>
   );
 }
 
 // 스타일 정의
-const containerStyle: React.CSSProperties = {
-  maxWidth: '800px',
-  margin: '2rem auto',
-  padding: '1rem',
-};
+const Container = styled.div`
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+`;
 
-const formStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1rem',
-};
+const FormGroup = styled.div`
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+`;
 
-const formGroupStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.5rem',
-};
+const ImagePreview = styled.div`
+  margin-top: 1rem;
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+`;
 
-const labelStyle: React.CSSProperties = {
-  fontWeight: 'bold',
-};
+const PostPreview = styled.div`
+  margin-top: 2rem;
+  background-color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+`;
 
-const inputStyle: React.CSSProperties = {
-  padding: '0.5rem',
-  fontSize: '1rem',
-  borderRadius: '0.25rem',
-  border: '1px solid #cbd5e0',
-};
-
-const textareaStyle: React.CSSProperties = {
-  padding: '0.5rem',
-  fontSize: '1rem',
-  borderRadius: '0.25rem',
-  border: '1px solid #cbd5e0',
-  minHeight: '8rem',
-};
-
-const submitButtonStyle: React.CSSProperties = {
-  backgroundColor: '#4299e1',
-  color: 'white',
-  padding: '0.5rem 1rem',
-  borderRadius: '0.25rem',
-  border: 'none',
-  cursor: 'pointer',
-};
