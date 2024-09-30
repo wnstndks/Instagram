@@ -23,7 +23,7 @@ export default function Profile() {
             프로필 편집
           </Link>
           <Link href="/write" style={editButtonStyle}>
-            게시물 작성
+            게시글 작성
           </Link>
         </div>
       </div>

@@ -31,62 +31,96 @@ export default function Post({
   };
 
   return (
-    <div style={{
-      backgroundColor: 'white',
-      border: '1px solid #e5e5e5',
-      borderRadius: '8px',
-      marginBottom: '60px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      margin: '0 auto',
-      maxWidth: '50%', // 가로 크기 60%
-      padding: '0 16px', // 양쪽 패딩 추가
-      boxSizing: 'border-box', // 패딩을 포함한 전체 크기 계산
-      marginTop:'30px',
-    }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '16px'
-      }}>
+    <div
+      style={{
+        backgroundColor: "white",
+        border: "1px solid #dbdbdb",
+        borderRadius: "10px",
+        marginBottom: "40px",
+        maxWidth: "800px", // 가로 크기 고정
+        margin: "30px auto", // 가운데 정렬
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // 그림자 추가
+        fontFamily: "'Helvetica Neue', Arial, sans-serif", // 인스타그램스러운 글꼴
+      }}
+    >
+      {/* 상단 사용자 정보 */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          padding: "16px",
+          borderBottom: "1px solid #dbdbdb",
+        }}
+      >
         <Image
           src={userImage}
           alt={user}
           width={32}
           height={32}
           style={{
-            borderRadius: '50%',
-            marginRight: '16px'
+            borderRadius: "50%",
+            marginRight: "12px",
           }}
         />
-        <span style={{ fontWeight: '600' }}>{user}</span>
+        <span style={{ fontWeight: "600", fontSize: "14px", color: "#262626" }}>
+          {user}
+        </span>
       </div>
+
+      {/* 게시물 이미지 */}
       <Image
         src={imageUrl}
         alt={caption}
         width={600}
         height={600}
-        style={{ width: '70%' }}
+        style={{
+          width: "100%",
+          maxHeight: "600px",
+          objectFit: "cover", // 이미지를 container에 맞게 조정
+        }}
       />
-      <div style={{
-        padding: '16px',
-        textAlign: 'center'
-      }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '8px',
-          justifyContent: 'center'
-        }}>
-          <button onClick={handleLike} style={{ margin: '10px', fontSize: '20px' }}>❤️</button>
-          <span style={{ fontWeight: '600' }}>{likes} likes</span>
+
+      {/* 하단 인터랙션 */}
+      <div style={{ padding: "16px" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "8px",
+          }}
+        >
+          <button
+            onClick={handleLike}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              marginRight: "8px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "24px",
+                color: isLiked ? "#ed4956" : "#262626", // 좋아요 상태에 따라 색상 변경
+              }}
+            >
+              ❤️
+            </span>
+          </button>
+          <span
+            style={{
+              fontWeight: "600",
+              fontSize: "14px",
+              color: "#262626",
+            }}
+          >
+            {likes} likes
+          </span>
         </div>
-        <p>
-          <span style={{
-            fontWeight: '600',
-            marginRight: '8px'
-          }}>{user}</span>
+
+        {/* 캡션 */}
+        <p style={{ fontSize: "14px", color: "#262626" }}>
+          <span style={{ fontWeight: "600", marginRight: "8px" }}>{user}</span>
           {caption}
         </p>
       </div>

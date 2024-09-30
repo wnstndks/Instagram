@@ -36,32 +36,34 @@ export default function WritePage() {
 
   return (
     <Container>
-      <h1>글 작성</h1>
-      <form onSubmit={handleSubmit}>
+      <Title>새 게시물</Title>
+      <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <label htmlFor="title">제목</label>
-          <input
+          <Label htmlFor="title">제목</Label>
+          <Input
             type="text"
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            placeholder="제목을 입력하세요"
           />
         </FormGroup>
 
         <FormGroup>
-          <label htmlFor="description">내용</label>
-          <textarea
+          <Label htmlFor="description">내용</Label>
+          <TextArea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            placeholder="내용을 입력하세요"
           />
         </FormGroup>
 
         <FormGroup>
-          <label htmlFor="image">이미지 업로드</label>
-          <input
+          <Label htmlFor="image">이미지 업로드</Label>
+          <FileInput
             type="file"
             id="image"
             onChange={handleImageChange}
@@ -69,24 +71,24 @@ export default function WritePage() {
           />
         </FormGroup>
 
-        {/* 이미지 미리보기 */}
         {imagePreview && (
           <ImagePreview>
-            <p>이미지 미리보기:</p>
-            <img src={imagePreview} alt="미리보기 이미지" />
+            <PreviewLabel>이미지 미리보기</PreviewLabel>
+            <PreviewImage src={imagePreview} alt="미리보기 이미지" />
           </ImagePreview>
         )}
 
-        <button type="submit">게시물 작성</button>
-      </form>
+        <SubmitButton type="submit">게시하기</SubmitButton>
+      </Form>
 
-      {/* 게시물 미리보기 */}
       {postSubmitted && (
         <PostPreview>
-          <h2>제출된 게시물</h2>
-          <h3>{title}</h3>
-          <p>{description}</p>
-          {imagePreview && <img src={imagePreview} alt="게시물 이미지" />}
+          <PreviewTitle>게시물 미리보기</PreviewTitle>
+          <PreviewContent>
+            <h3>{title}</h3>
+            <p>{description}</p>
+            {imagePreview && <PreviewImage src={imagePreview} alt="게시물 이미지" />}
+          </PreviewContent>
         </PostPreview>
       )}
     </Container>
@@ -97,38 +99,120 @@ export default function WritePage() {
 const Container = styled.div`
   max-width: 600px;
   margin: 2rem auto;
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
-const FormGroup = styled.div`
-  margin-bottom: 1rem;
+const Title = styled.h1`
+  font-size: 24px;
+  color: #262626;
+  margin-bottom: 1.5rem;
+  text-align: center;
+`;
+
+const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
 
+const FormGroup = styled.div`
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  font-size: 14px;
+  color: #8e8e8e;
+  margin-bottom: 0.5rem;
+`;
+
+const Input = styled.input`
+  padding: 0.75rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  font-size: 16px;
+  &:focus {
+    outline: none;
+    border-color: #a8a8a8;
+  }
+`;
+
+const TextArea = styled.textarea`
+  padding: 0.75rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  font-size: 16px;
+  min-height: 100px;
+  resize: vertical;
+  &:focus {
+    outline: none;
+    border-color: #a8a8a8;
+  }
+`;
+
+const FileInput = styled.input`
+  margin-top: 0.5rem;
+`;
+
 const ImagePreview = styled.div`
   margin-top: 1rem;
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+  margin-bottom: 1.5rem;
+`;
+
+const PreviewLabel = styled.p`
+  font-size: 14px;
+  color: #8e8e8e;
+  margin-bottom: 0.5rem;
+`;
+
+const PreviewImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const SubmitButton = styled.button`
+  background-color: #0095f6;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #0081d6;
   }
 `;
 
 const PostPreview = styled.div`
   margin-top: 2rem;
-  background-color: #e2e8f0;
-  padding: 1rem;
+  background-color: #fafafa;
+  padding: 1.5rem;
   border-radius: 8px;
-  h2 {
-    margin-bottom: 0.5rem;
-  }
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
+  border: 1px solid #dbdbdb;
 `;
 
+const PreviewTitle = styled.h2`
+  font-size: 18px;
+  color: #262626;
+  margin-bottom: 1rem;
+`;
+
+const PreviewContent = styled.div`
+  h3 {
+    font-size: 16px;
+    color: #262626;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    font-size: 14px;
+    color: #262626;
+    margin-bottom: 1rem;
+  }
+`;
