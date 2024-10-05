@@ -21,7 +21,7 @@ export default function Header() {
           <Icon>💬</Icon>
         </StyledLink>
         <StyledLink href="/profile">
-          <Icon>❤️</Icon>
+          <Icon>♥️</Icon>
         </StyledLink>
       </Icons>
     </HeaderContainer>

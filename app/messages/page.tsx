@@ -18,26 +18,30 @@ export default function Messages() {
 
   return (
     <div style={{ maxWidth: '800px', margin: 'auto', marginTop: '32px', padding: '16px' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Messages</h1>
+      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', textAlign: 'center', color: '#333' }}>
+        Messages
+      </h1>
       <ul style={{ listStyleType: 'none', padding: '0' }}>
         {messages.map((message) => (
-          <li
-            key={message.id}
-            style={{
-              borderBottom: '1px solid #e5e5e5',
-              padding: '16px',
-              cursor: 'pointer',
-              backgroundColor: hoveredId === message.id ? '#f7f7f7' : 'white',
-              transition: 'background-color 0.3s',
-            }}
-            onMouseEnter={() => setHoveredId(message.id)}
-            onMouseLeave={() => setHoveredId(null)}
-          >
-            <div style={{ fontWeight: '600' }}>{message.user}</div>
-            <Link href={`/messages/${message.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div style={{ color: '#6b7280' }}>{message.lastMessage}</div>
-            </Link>
-          </li>
+          <Link href={`/messages/${message.id}`} key={message.id} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <li
+              style={{
+                borderBottom: '1px solid #e5e5e5',
+                padding: '16px',
+                cursor: 'pointer',
+                backgroundColor: hoveredId === message.id ? '#f7f7f7' : 'white',
+                boxShadow: hoveredId === message.id ? '0px 4px 12px rgba(0, 0, 0, 0.1)' : 'none',
+                borderRadius: '8px',
+                transition: 'background-color 0.3s, box-shadow 0.3s, transform 0.3s',
+                transform: hoveredId === message.id ? 'scale(1.02)' : 'scale(1)',
+              }}
+              onMouseEnter={() => setHoveredId(message.id)}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              <div style={{ fontWeight: '600', fontSize: '18px', color: '#111' }}>{message.user}</div>
+              <div style={{ color: '#6b7280', marginTop: '4px', fontSize: '14px' }}>{message.lastMessage}</div>
+            </li>
+          </Link>
         ))}
       </ul>
     </div>
