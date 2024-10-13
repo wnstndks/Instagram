@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import cat from "../public/img/image.png";
 import Link from "next/link";
 
 export default function Profile() {
@@ -10,7 +9,7 @@ export default function Profile() {
       {/* 프로필 헤더 */}
       <div style={profileHeaderStyle}>
         <Image
-          src={cat} // 프로필 이미지 경로
+          src={'/img/cat.jpg'} // 프로필 이미지 경로
           alt="User Profile"
           width={100}
           height={100}
